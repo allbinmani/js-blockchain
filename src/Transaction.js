@@ -41,16 +41,15 @@ export default class Transaction {
 
   get Hash() {
     if(!this._hash) {
-      this._hash = Config.HASH_FUNC(this.toHash());
+      this._hash = Config.HASH_FUNC(this.HashFields.join(''));
     }
     return this._hash;
   }
   
-  toHash() {
-    return [this.Id, this.Sender, this.Receiver, this.Amount, this.Timestamp.toISOString()]
-      .join('');
+  get HashFields() {
+    return [this.Id, this.Sender, this.Receiver, this.Amount, this.Timestamp.toISOString()];
   }
-  
+
   static fromJSON(json) {
     let nt = new Transaction(parseInt(json.id), 
                              new Wallet(json.sender), 
