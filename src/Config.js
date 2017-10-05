@@ -1,10 +1,6 @@
 
-//import CryptoJS from 'ezcrypto';
-
 const hfn = (process.env.HASH_FUNC !== void 0 ? process.env.HASH_FUNC : 'SHA256');
-
 const hash_func = require('ezcrypto/lib/' + hfn.toLowerCase())[hfn];
-
 const nonce_size = parseInt(process.env.NONCE_SIZE !== void 0 ? process.env.NONCE_SIZE : 32, 10);
 
 const Config = {
