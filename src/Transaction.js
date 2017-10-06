@@ -23,22 +23,27 @@ export default class Transaction {
     this._id = id;
   }
   
+  // @return {Wallet|null}
   get Sender() {
     return this._sender;
   }
   
+  // @return {Wallet|null}
   get Receiver() {
     return this._receiver;
   }
   
+  // @return {Number}
   get Amount() {
-    return this._amount;
+    return Number(this._amount||0);
   }
-  
+
+  // @return {Date}
   get Timestamp() {
     return this._timestamp;
   }
 
+  // @return {Hash} The Hash object
   get Hash() {
     if(!this._hash) {
       this._hash = Config.HASH_FUNC(this.HashFields.join(''));
@@ -46,14 +51,15 @@ export default class Transaction {
     return this._hash;
   }
   
+  // @return {Array} The transaction field values
   get HashFields() {
     return [this.Id, this.Sender, this.Receiver, this.Amount, this.Timestamp.toISOString()];
   }
 
-  static fromJSON(json) {
+  static fromJSON(json, blockchain) {
     let nt = new Transaction(parseInt(json.id), 
-                             new Wallet(json.sender), 
-                             new Wallet(json.receiver), 
+                             new Wallet(json.sender, blockchain), 
+                             new Wallet(json.receiver, blockchain), 
                              parseFloat(json.amount), 
                              new Date(timestamp));
     let hash = nt.Hash.toString();
