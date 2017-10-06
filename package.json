@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "mkdir dist; ./node_modules/.bin/browserify src/init_blockchain.js -r ./node_modules/ezcrypto/lib/hmac.js:./lib/hmac -r ./node_modules/ezcrypto/lib/sha1.js:./lib/sha1 -o dist/init_blockchain.js -t [ babelify --presets es2015 ] -t [ envify ]",
-    "init_blockchain": "node ./dist/init_blockchain.js"
+    "init_blockchain": "node --turbo ./dist/init_blockchain.js"
   },
   "repository": "git@github.com:allbinmani/js-blockchain.git",
   "author": "origo <mattias@allbinary.se>",
