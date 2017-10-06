@@ -4,7 +4,7 @@ import Transaction from './Transaction';
 import Block from './Block';
 import Wallet from './Wallet';
 import Miner from './Miner';
-import Config from './Config.js';
+import Config from './Config';
 
 function _createGenesisBlock(genesis_wallet) {
   let gb = new Block(0, Config.VERSION, new Date());
@@ -49,7 +49,7 @@ function mine(num) {
     console.log('CANDIDATE FOR BLOCK %d FOUND!', minedBlock.Id, minedBlock.toString());
     // Append current NextBlock to chain and generates new Nextblock
     bc.nextBlock(); 
-    console.log('Blockchain', bc.toJSON());
+    console.log('Blockchain', bc.pretty());
   }
 }
 mine();
