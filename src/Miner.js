@@ -32,13 +32,16 @@ export default class Miner {
     let i = 0;
     let result = null;
     let start = Date.now();
-    while(i++ < max_iters) {
+    if(start - block.Timestamp.getTime() > 10000) {
+      block.Timestamp = new Date();
+      console.log('New timestamp: %s', block.Timestamp.toISOString());
+    }
+    while(i++ < max_iters && result === null) {
       let lz = this._attempt(block);
       if(lz >= difficulty) {
         this._bestDifficulty = lz;
         result = block;
         console.log('FOUND NONCE! difficulty:%d(>=%d)  nonce:%d  hash:%s', lz, difficulty, this.Nonce, this.Hash);
-        break;
       } else if(lz >= this._bestDifficulty) {
         this._bestDifficulty = lz;
       }
