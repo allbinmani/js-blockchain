@@ -8,7 +8,6 @@ export default class Blockchain {
   constructor(genesisBlock, genesisHash, difficulty=5) {
     this._height = 0;
     this._difficulty = difficulty;
-    genesisBlock.appendToChain(genesisHash);
     this._chain = [ genesisBlock ];
     this._nextBlock = new Block(++this._height, Config.VERSION, new Date(), [], genesisHash);
   }
@@ -34,7 +33,6 @@ export default class Blockchain {
   }
   
   nextBlock() {
-    this._nextBlock.appendToChain(this.LastBlock.Hash);
     this._chain.push(this._nextBlock);
     this._nextBlock = new Block(++this._height, Config.VERSION, new Date(), [], this.LastBlock.Hash);
   }

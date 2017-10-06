@@ -22,10 +22,6 @@ export default class Block {
     this._thash = false;
   }
   
-  appendToChain(previousHash) {
-    this._previousHash = previousHash;
-  }
-  
   get Id() {
     return this._id;
   }
@@ -38,6 +34,11 @@ export default class Block {
     return this._timestamp;
   }
   
+  set Timestamp(new_timestamp) {
+    this._timestamp = new_timestamp;
+    this._hash = false; // new timestamp, new hash
+  }
+  
   get Transactions() {
     return this._transactions;
   }
@@ -47,16 +48,23 @@ export default class Block {
     return this._previousHash;
   }
   
+  // @return {String}
+  set PreviousHash(previousHash) {
+    this._previousHash = Util.zeropad(previousHash);
+    this._hash = false; // new previous hash, new hash
+  }
+  
   // @param {Number} New nonce / invalidates any currently calculated hash
   set Nonce(nonce) {
     this._hash = false; // new nonce, new hash
     this._nonce = nonce;
   }
   
+  // @return {Number} Nonce
   get Nonce() {
     return Number(this._nonce);
   }
-  
+
   get Hash() {
     if(this._hash === false) {
         this._hash = Config.HASH_FUNC(Config.HASH_FUNC(this.HashFields.join('')).toString());
@@ -80,6 +88,10 @@ export default class Block {
             this.PreviousHash, 
             Config.COINBASE1, 
             this.Nonce.toString(16)];
+  }
+
+  static fromJSON(json) {
+
   }
 
   toJSON() {
